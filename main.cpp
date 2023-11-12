@@ -6,8 +6,5 @@
 
 int main()
 {
-    smartHomeSystemInit();
-    while (true) {
-        smartHomeSystemUpdate();
-    }
+    
 }
