@@ -18,8 +18,8 @@ from sys import exit
 
 ##################### SETUP #####################################
 
-driver = webdriver.Chrome(executable_path=r'D:\PNA\DIDI\Rastreador\Backup\Python\chromedriver.exe')
-driver.get("file:///D:\PNA\DIDI\Rastreador\Backup\Python\seguimiento.html")
+driver = webdriver.Chrome(executable_path=r'C:\CercoVirtual\chromedriver.exe')
+driver.get("file:///C:\CercoVirtual\seguimiento.html")
 
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
