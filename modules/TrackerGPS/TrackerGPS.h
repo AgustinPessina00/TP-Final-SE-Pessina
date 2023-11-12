@@ -1,7 +1,7 @@
 //=====[#include guards - begin]===============================================
 
-#ifndef _USER_INTERFACE_H_
-#define _USER_INTERFACE_H_
+#ifndef _TrackerGPS_H_
+#define _TrackerGPS_H_
 
 //=====[Declaration of public defines]=========================================
 
@@ -11,4 +11,4 @@
 
 //=====[#include guards - end]=================================================
 
-#endif // _USER_INTERFACE_H_
+#endif // _TrackerGPS_H_

@@ -1,5 +1,7 @@
 //=====[Libraries]=============================================================
 
+#include "TrackerGPS.h"
+
 //=====[Declaration of private defines]========================================
 
 //=====[Declaration of private data types]=====================================
