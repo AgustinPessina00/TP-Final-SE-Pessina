@@ -23,7 +23,7 @@ chrome_service = Service(executable_path=r'C:\CercoVirtual\chromedriver.exe')
 driver = webdriver.Chrome(service=chrome_service)
 driver.get("file:///C:\CercoVirtual\seguimiento.html")
 #driver = webdriver.Chrome(executable_path=r'C:\CercoVirtual\chromedriver.exe')
-#//driver.get("file:///C:\CercoVirtual\seguimiento.html")
+#driver.get("file:///C:\CercoVirtual\seguimiento.html")
 
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -31,7 +31,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #################################################
 
 def folium_plot_locations(coord_list):
-    m = folium.Map(location=coord_list[0][:2], zoom_start=15)
+    m = folium.Map(location=coord_list[0][:2], zoom_start=15, tiles='OpenStreetMap')
 
     # Agregar un marcador en cada ubicación
     for i, coord in enumerate(coord_list):
