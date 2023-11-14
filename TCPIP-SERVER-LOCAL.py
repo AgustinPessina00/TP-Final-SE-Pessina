@@ -17,9 +17,13 @@ import signal
 from sys import exit
 
 ##################### SETUP #####################################
+from selenium.webdriver.chrome.service import Service
 
-driver = webdriver.Chrome(executable_path=r'C:\CercoVirtual\chromedriver.exe')
+chrome_service = Service(executable_path=r'C:\CercoVirtual\chromedriver.exe')
+driver = webdriver.Chrome(service=chrome_service)
 driver.get("file:///C:\CercoVirtual\seguimiento.html")
+#driver = webdriver.Chrome(executable_path=r'C:\CercoVirtual\chromedriver.exe')
+#//driver.get("file:///C:\CercoVirtual\seguimiento.html")
 
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
