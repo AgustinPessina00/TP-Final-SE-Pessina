@@ -7,6 +7,8 @@
 
 //=====[Declaration of public data types]======================================
 
+//=====[Declaration of public classes]=========================================
+
 //=====[Declarations (prototypes) of public functions]=========================
 
 //=====[#include guards - end]=================================================
