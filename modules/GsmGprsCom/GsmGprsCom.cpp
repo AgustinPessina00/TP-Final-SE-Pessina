@@ -10,8 +10,9 @@
 //=====[Declaration of private defines]========================================
 #define REFRESH_TIME_10MS         10
 #define REFRESH_TIME_1000MS       1000
-#define APN_USER_PASS "AT+CSTT=\"wap.gprs.unifon.com.ar \",\"wap\",\"wap\"\r\n" //APN / username / password (CAMBIAR SI SE CAMBIA LA SIM!)  internet.gprs.unifon.com.ar
-#define ATPLUSCIPSTART_IP_PORT "AT+CIPSTART=\"TCP\",\"186.19.62.251\",\"123\"\r\n" //PROTOCOL / EXTERNAL IP / PORT
+#define APN_USER_PASS "AT+CSTT=\"wap.gprs.unifon.com.ar \",\"wap\",\"wap\"\r\n"     //APN / username / password (CAMBIAR SI SE CAMBIA LA SIM!)  internet.gprs.unifon.com.ar
+#define ATPLUSCIPSTART_IP_PORT "AT+CIPSTART=\"TCP\",\"186.19.62.251\",\"123\"\r\n"  //PROTOCOL / EXTERNAL IP / PORT 
+                                                                                    //NOTA MIA: DEBERÍA USAR MI IP: 192.168.0.45
 #define DEBUG
 #define LOW_LEVEL_SIGNAL 6
 #define CCID_VERIFICATION "8954078100795517486f" // (CAMBIAR SI SE CAMBIA LA SIM!)
@@ -236,7 +237,7 @@ void gsmGprsCom::connect( ) {
         case  GSM_GPRS_STATE_ATPLUSCIFSR_WAIT_FOR_RESPONSE:  {  //AT+CIFSR
             this->checkATPLUSCIFSRcommand  ();
             if (this->refreshDelay->read ()) {
-               this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIFSR_TO_BE_SEND;
+                this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIFSR_TO_BE_SEND;
                 #ifdef DEBUG
                 uartUsb.write ( "\r\n",  3 );  // debug only
                 numberOfTries++;
