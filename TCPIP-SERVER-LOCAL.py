@@ -31,7 +31,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #################################################
 
 def folium_plot_locations(coord_list):
-    m = folium.Map(location=coord_list[0][:2], zoom_start=15, tiles='OpenStreetMap')
+    m = folium.Map(location=coord_list[0][:2], zoom_start=15)
 
     # Agregar un marcador en cada ubicación
     for i, coord in enumerate(coord_list):
