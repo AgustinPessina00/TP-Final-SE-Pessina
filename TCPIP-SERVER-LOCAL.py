@@ -42,18 +42,19 @@ def folium_plot_locations(coord_list, isVirtualFence, coord_virtual_fence):
                 tooltip=tooltip
                 ).add_to(m)
     
-    for i, coord in enumerate(coord_list):
-        latitude, longitude = coord[:2]
-        timestamp = coord[2]
-        tooltip = f'Hora: {timestamp}'
-        icon = folium.features.CustomIcon(icon_image='C:/CercoVirtual/car_icon.png', icon_size=(15, 15))
-        # Agregar un marcador en cada ubicación
-        folium.Marker(
-            location=[latitude, longitude],
-            popup=f'<strong>Dispositivo {i+1}</strong><br>Hora: {timestamp}',
-            tooltip=tooltip,
-            icon=icon
-        ).add_to(m)
+    if not isVirtualFence:
+        for i, coord in enumerate(coord_list):
+            latitude, longitude = coord[:2]
+            timestamp = coord[2]
+            tooltip = f'Hora: {timestamp}'
+            icon = folium.features.CustomIcon(icon_image='C:/CercoVirtual/car_icon.png', icon_size=(15, 15))
+            # Agregar un marcador en cada ubicación
+            folium.Marker(
+                location=[latitude, longitude],
+                popup=f'<strong>Dispositivo {i+1}</strong><br>Hora: {timestamp}',
+                tooltip=tooltip,
+                icon=icon
+            ).add_to(m)
 
     # Unir las ubicaciones con flechas
     #for i in range(len(coord_list) - 1):
@@ -135,7 +136,8 @@ def main():
                     timestamp = datetime.now().strftime("%H:%M:%S")
                     if isVirtualFence:
                         coord_virtual_fence = (latitude, longitude, timestamp)
-                    coord_list.append((latitude, longitude, timestamp))
+                    else:
+                        coord_list.append((latitude, longitude, timestamp))
 
                     folium_plot_locations(coord_list, isVirtualFence, coord_virtual_fence)
 
