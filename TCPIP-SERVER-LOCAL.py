@@ -43,7 +43,7 @@ def folium_plot_locations(coord_list, isVirtualFence, coord_virtual_fence):
             location=[latitude, longitude],
             color="orange",
             fill_color="red",
-            radius = 200,
+            radius = 350,
             weight=4,
             fill_opacity = 0.8,
             tooltip=tooltip
