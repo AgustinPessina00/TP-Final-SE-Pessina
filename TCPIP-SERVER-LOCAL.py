@@ -17,25 +17,25 @@ import signal
 from sys import exit
 
 ##################### SETUP #####################################
-from selenium.webdriver.chrome.service import Service
+#from selenium.webdriver.chrome.service import Service
 
-chrome_service = Service(executable_path=r'C:\CercoVirtual\chromedriver.exe')
-driver = webdriver.Chrome(service=chrome_service)
-driver.get("file:///C:\CercoVirtual\seguimiento.html")
+#chrome_service = Service(executable_path=r'C:\CercoVirtual\chromedriver.exe')
+#driver = webdriver.Chrome(service=chrome_service)
+#driver.get("file:///C:\CercoVirtual\seguimiento.html")
 
 #driver = webdriver.Chrome(executable_path=r'C:\CercoVirtual\chromedriver.exe')
 #driver.get("file:///C:\CercoVirtual\seguimiento.html")
 
 # Create a TCP/IP socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 #################################################
-
+"""
 def folium_plot_locations(coord_list):
     m = folium.Map(location=coord_list[0][:2], zoom_start=15)
 
     # Agregar un marcador en cada ubicación
-    """for i, coord in enumerate(coord_list):
+    for i, coord in enumerate(coord_list):
         latitude, longitude = coord[:2]
         timestamp = coord[2]
         tooltip = f'Hora: {timestamp}'
@@ -50,11 +50,11 @@ def folium_plot_locations(coord_list):
     # Unir las ubicaciones con flechas
     for i in range(len(coord_list) - 1):
         folium.PolyLine([coord_list[i][:2], coord_list[i+1][:2]], color="red", weight=2.5, opacity=1).add_to(m)
-    """
+    
     m.save('seguimiento.html')
     m
     driver.refresh()
-
+"""
 def main():
     coord_list = [-34.602867,-58.422269, '2023-11-15 12:30:00']
     m = folium.Map()
@@ -170,6 +170,7 @@ def main():
             print('Cerrando conexion TCP/IP')
             connection.close()
 """
+"""
 if __name__ == '__main__':
     try:
         main()
@@ -179,3 +180,4 @@ if __name__ == '__main__':
             sys.exit(0)
         except SystemExit:
             os._exit(0)
+"""
