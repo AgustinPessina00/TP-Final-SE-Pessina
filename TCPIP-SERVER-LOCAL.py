@@ -90,9 +90,9 @@ def main():
     [40.7211, -74.0030, '2023-11-15 12:45:00'],
     # Agrega más coordenadas si es necesario
     ]
-
     # Generar el mapa con las coordenadas de ejemplo
     generar_mapa(coordenadas_ejemplo)
+    print('Se genera mapa')
     
     index = 0
     latency = 0
