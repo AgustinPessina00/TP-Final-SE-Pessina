@@ -23,8 +23,8 @@ chrome_service = Service(executable_path=r'C:\CercoVirtual\chromedriver.exe')
 driver = webdriver.Chrome(service=chrome_service)
 driver.get("file:///C:\CercoVirtual\seguimiento.html")
 
-m = folium.Map(location=[0,0], zoom_start=15)
-m.save('C:\CercoVirtual\seguimiento.html')
+#m = folium.Map(location=[0,0], zoom_start=15)
+#m.save('C:\CercoVirtual\seguimiento.html')
 
 #driver = webdriver.Chrome(executable_path=r'C:\CercoVirtual\chromedriver.exe')
 #driver.get("file:///C:\CercoVirtual\seguimiento.html")
