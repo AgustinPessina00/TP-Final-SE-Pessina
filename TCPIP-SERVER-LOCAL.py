@@ -19,9 +19,9 @@ from sys import exit
 ##################### SETUP #####################################
 from selenium.webdriver.chrome.service import Service
 
-chrome_service = Service(executable_path=r'C:/CercoVirtual/chromedriver.exe')
+chrome_service = Service(executable_path=r'C:\CercoVirtual\chromedriver.exe')
 driver = webdriver.Chrome(service=chrome_service)
-driver.get("file:///C:/CercoVirtual/seguimiento.html")
+driver.get("file:///C:\CercoVirtual\seguimiento.html")
 
 #driver = webdriver.Chrome(executable_path=r'C:\CercoVirtual\chromedriver.exe')
 #driver.get("file:///C:\CercoVirtual\seguimiento.html")
