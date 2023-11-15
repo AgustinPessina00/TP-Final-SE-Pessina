@@ -29,7 +29,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #################################################################
 
 def folium_plot_locations(coord_list, isVirtualFence, coord_virtual_fence):
-    m = folium.Map(location=coord_list[0][:2], zoom_start=30)
+    m = folium.Map(location=coord_list[0][:2], zoom_start=15)
 
     latitude, longitude = coord_virtual_fence[:2]
     timestamp = coord_virtual_fence[2]
