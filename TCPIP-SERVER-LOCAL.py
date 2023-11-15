@@ -17,11 +17,11 @@ import signal
 from sys import exit
 
 ##################### SETUP #####################################
-#from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.service import Service
 
-#chrome_service = Service(executable_path=r'C:\CercoVirtual\chromedriver.exe')
-#driver = webdriver.Chrome(service=chrome_service)
-#driver.get("file:///C:\CercoVirtual\seguimiento.html")
+chrome_service = Service(executable_path=r'C:\CercoVirtual\chromedriver.exe')
+driver = webdriver.Chrome(service=chrome_service)
+driver.get("file:///C:\CercoVirtual\seguimiento.html")
 
 #driver = webdriver.Chrome(executable_path=r'C:\CercoVirtual\chromedriver.exe')
 #driver.get("file:///C:\CercoVirtual\seguimiento.html")
@@ -30,7 +30,7 @@ from sys import exit
 #sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 #################################################
-"""
+
 def folium_plot_locations(coord_list):
     m = folium.Map(location=coord_list[0][:2], zoom_start=15)
 
@@ -54,13 +54,13 @@ def folium_plot_locations(coord_list):
     m.save('seguimiento.html')
     m
     driver.refresh()
-"""
+
+
 def main():
     coord_list = [-34.602867,-58.422269, '2023-11-15 12:30:00']
     m = folium.Map()
     m.save('seguimiento.html')
 
-    """
     print('Bienvenido')
     print('Prefectura Naval Argentina')
     print('Departamento de Apoyo Tecnologico para el Analisis Criminal')
@@ -169,8 +169,8 @@ def main():
         finally:
             print('Cerrando conexion TCP/IP')
             connection.close()
-"""
-"""
+
+
 if __name__ == '__main__':
     try:
         main()
@@ -180,4 +180,3 @@ if __name__ == '__main__':
             sys.exit(0)
         except SystemExit:
             os._exit(0)
-"""
