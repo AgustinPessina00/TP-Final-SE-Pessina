@@ -57,9 +57,9 @@ def folium_plot_locations(coord_list):
 
 
 def main():
-    coord_list = [-34.602867,-58.422269, '2023-11-15 12:30:00']
-    m = folium.Map()
-    m.save('seguimiento.html')
+    #coord_list = [-34.602867,-58.422269, '2023-11-15 12:30:00']
+    #m = folium.Map()
+    #m.save('seguimiento.html')
 
     print('Bienvenido')
     print('Prefectura Naval Argentina')
