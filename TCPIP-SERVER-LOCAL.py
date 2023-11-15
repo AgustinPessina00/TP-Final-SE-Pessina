@@ -134,8 +134,7 @@ def main():
                     timestamp = datetime.now().strftime("%H:%M:%S")
                     if isVirtualFence:
                         coord_virtual_fence = (latitude, longitude, timestamp)
-                    else:
-                        coord_list.append((latitude, longitude, timestamp))
+                    coord_list.append((latitude, longitude, timestamp))
 
                     folium_plot_locations(coord_list, isVirtualFence, coord_virtual_fence)
 
