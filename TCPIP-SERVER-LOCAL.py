@@ -120,7 +120,7 @@ def main():
                     timestamp = datetime.now().strftime("%H:%M:%S")
                     coord_list.append((latitude, longitude, timestamp))
                     folium_plot_locations(coord_list)
-
+                    
                     index += 1
                     row += 1 
                     actual_datetime = datetime.now()
