@@ -124,6 +124,7 @@ def main():
                     print('Latitud:', latitude)
                     print('Longitud:', longitude)
                     print('Cerco virtual:', isVirtualFence)
+                    isVirtualFence = isVirtualFence.strip() == 'True'
 
                     # PLOTEO DE COORDENADAS
                     timestamp = datetime.now().strftime("%H:%M:%S")
