@@ -27,7 +27,7 @@ driver.get("file:///C:\CercoVirtual\seguimiento.html")
 #driver.get("file:///C:\CercoVirtual\seguimiento.html")
 
 # Create a TCP/IP socket
-#sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 #################################################
 
