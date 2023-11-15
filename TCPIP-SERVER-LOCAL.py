@@ -34,7 +34,8 @@ def folium_plot_locations(coord_list, isVirtualFence):
     if isVirtualFence:
         # Generar el cerco virtual
         folium.Circle(location=coord_list[0][:2], color="orange",fil_collor="red",radius = 100,weight=4,fill_opacity = 0.8).add_to(m)
-    else:
+        
+    if not isVirtualFence
         # Agregar un marcador en cada ubicación
         for i, coord in enumerate(coord_list):
             latitude, longitude = coord[:2]
