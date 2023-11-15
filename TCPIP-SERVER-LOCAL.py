@@ -19,9 +19,9 @@ from sys import exit
 ##################### SETUP #####################################
 from selenium.webdriver.chrome.service import Service
 
-chrome_service = Service(executable_path=r'C:\CercoVirtual\chromedriver.exe')
+chrome_service = Service(executable_path=r'C:/CercoVirtual/chromedriver.exe')
 driver = webdriver.Chrome(service=chrome_service)
-driver.get("file:///C:\CercoVirtual\seguimiento.html")
+driver.get("file:///C:/CercoVirtual/seguimiento.html")
 
 #driver = webdriver.Chrome(executable_path=r'C:\CercoVirtual\chromedriver.exe')
 #driver.get("file:///C:\CercoVirtual\seguimiento.html")
@@ -51,7 +51,7 @@ def folium_plot_locations(coord_list):
     for i in range(len(coord_list) - 1):
         folium.PolyLine([coord_list[i][:2], coord_list[i+1][:2]], color="red", weight=2.5, opacity=1).add_to(m)
     """
-    m.save("seguimiento.html")
+    m.save('seguimiento.html')
     m
     driver.refresh()
 
