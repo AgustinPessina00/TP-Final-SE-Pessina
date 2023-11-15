@@ -38,15 +38,15 @@ def folium_plot_locations(coord_list, isVirtualFence):
         # Agregar un marcador en cada ubicación
     for i, coord in enumerate(coord_list):
         latitude, longitude = coord[:2]
-           timestamp = coord[2]
-           tooltip = f'Hora: {timestamp}'
-           icon = folium.features.CustomIcon(icon_image='C:\CercoVirtual\car_icon.png', icon_size=(30, 30))
-           folium.Marker(
-               location=[latitude, longitude],
-               popup=f'<strong>Dispositivo {i+1}</strong><br>Hora: {timestamp}',
-               tooltip=tooltip,
-               icon=icon
-           ).add_to(m)
+        timestamp = coord[2]
+        tooltip = f'Hora: {timestamp}'
+        icon = folium.features.CustomIcon(icon_image='C:\CercoVirtual\car_icon.png', icon_size=(30, 30))
+        folium.Marker(
+            location=[latitude, longitude],
+            popup=f'<strong>Dispositivo {i+1}</strong><br>Hora: {timestamp}',
+            tooltip=tooltip,
+            icon=icon
+        ).add_to(m)
 
     # Unir las ubicaciones con flechas
     for i in range(len(coord_list) - 1):
