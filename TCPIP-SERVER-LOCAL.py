@@ -56,6 +56,11 @@ def folium_plot_locations(coord_list):
     driver.refresh()
 
 def main():
+    coord_list = [-34.602867,-58.422269]
+    m = folium.Map(location=coord_list[0][:2], zoom_start=15)
+    m.save('seguimiento.html')
+
+    """
     print('Bienvenido')
     print('Prefectura Naval Argentina')
     print('Departamento de Apoyo Tecnologico para el Analisis Criminal')
@@ -164,7 +169,7 @@ def main():
         finally:
             print('Cerrando conexion TCP/IP')
             connection.close()
-
+"""
 if __name__ == '__main__':
     try:
         main()
