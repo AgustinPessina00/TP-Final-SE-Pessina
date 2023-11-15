@@ -56,8 +56,8 @@ def folium_plot_locations(coord_list):
     driver.refresh()
 
 def main():
-    coord_list = [-34.602867,-58.422269]
-    m = folium.Map(location=coord_list[0][:2], zoom_start=15)
+    coord_list = [-34.602867,-58.422269, '2023-11-15 12:30:00']
+    m = folium.Map()
     m.save('seguimiento.html')
 
     """
