@@ -51,6 +51,7 @@ def folium_plot_locations(coord_list):
         folium.PolyLine([coord_list[i][:2], coord_list[i+1][:2]], color="red", weight=2.5, opacity=1).add_to(m)
     """
     m.save('seguimiento.html')
+    m
     driver.refresh()
 
 def main():
