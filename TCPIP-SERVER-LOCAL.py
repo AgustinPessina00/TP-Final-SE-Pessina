@@ -17,11 +17,12 @@ import signal
 from sys import exit
 
 ##################### SETUP #####################################
-from selenium.webdriver.chrome.service import Service
+"""from selenium.webdriver.chrome.service import Service
 
 chrome_service = Service(executable_path=r'C:\CercoVirtual\chromedriver.exe')
 driver = webdriver.Chrome(service=chrome_service)
 driver.get("file:///C:\CercoVirtual\seguimiento.html")
+"""
 #driver = webdriver.Chrome(executable_path=r'C:\CercoVirtual\chromedriver.exe')
 #driver.get("file:///C:\CercoVirtual\seguimiento.html")
 
@@ -52,7 +53,7 @@ def folium_plot_locations(coord_list):
     """
     m.save('seguimiento.html')
     m
-    driver.refresh()
+    #driver.refresh()
 
 def main():
     print('Bienvenido')
@@ -120,7 +121,7 @@ def main():
                     timestamp = datetime.now().strftime("%H:%M:%S")
                     coord_list.append((latitude, longitude, timestamp))
                     folium_plot_locations(coord_list)
-                    
+
                     index += 1
                     row += 1 
                     actual_datetime = datetime.now()
