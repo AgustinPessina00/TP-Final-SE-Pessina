@@ -22,6 +22,7 @@ from selenium.webdriver.chrome.service import Service
 chrome_service = Service(executable_path=r'C:\CercoVirtual\chromedriver.exe')
 driver = webdriver.Chrome(service=chrome_service)
 driver.get("file:///C:\CercoVirtual\seguimiento.html")
+driver.get('about:blank')
 
 #driver = webdriver.Chrome(executable_path=r'C:\CercoVirtual\chromedriver.exe')
 #driver.get("file:///C:\CercoVirtual\seguimiento.html")
@@ -56,7 +57,6 @@ def folium_plot_locations(coord_list, isVirtualFence):
         folium.PolyLine([coord_list[i][:2], coord_list[i+1][:2]], color="red", weight=2.5, opacity=1).add_to(m)
     
     m.save('C:\CercoVirtual\seguimiento.html')
-    m
     driver.refresh()
 
 
