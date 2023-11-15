@@ -54,7 +54,7 @@ def folium_plot_locations(coord_list, isVirtualFence, coord_virtual_fence):
             latitude, longitude = coord[:2]
             timestamp = coord[2]
             tooltip = f'Hora: {timestamp}'
-            icon = folium.features.CustomIcon(icon_image='C:/CercoVirtual/car_icon.png', icon_size=(15, 15))
+            icon = folium.features.CustomIcon(icon_image='C:/CercoVirtual/cow_icon.png', icon_size=(15, 15))
             # Agregar un marcador en cada ubicación
             folium.Marker(
                 location=[latitude, longitude],
