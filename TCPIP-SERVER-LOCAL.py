@@ -28,25 +28,31 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 #################################################################
 
-def folium_plot_locations(coord_list, isVirtualFence):
-    m = folium.Map(location=coord_list[0][:2], zoom_start=5)
+def folium_plot_locations(coord_list, isVirtualFence, coord_virtual_fence):
+    m = folium.Map(location=coord_list[0][:2], zoom_start=30)
+
+    timestamp = coord_virtual_fence[2]
+    tooltip = f'Hora: {timestamp}'
+    folium.Circle(location=[latitude, longitude],
+                color="orange",
+                fil_collor="red",
+                radius = 100,weight=4,
+                fill_opacity = 0.8,
+                tooltip=tooltip
+                ).add_to(m)
     
     for i, coord in enumerate(coord_list):
         latitude, longitude = coord[:2]
         timestamp = coord[2]
         tooltip = f'Hora: {timestamp}'
-        icon = folium.features.CustomIcon(icon_image='C:/CercoVirtual/car_icon.png', icon_size=(10, 10))
-        if isVirtualFence:
-            # Generar el cerco virtual
-            folium.Circle(location=[latitude, longitude], color="orange",fil_collor="red",radius = 100,weight=4,fill_opacity = 0.8).add_to(m)
-        else:
-            # Agregar un marcador en cada ubicación
-            folium.Marker(
-                location=[latitude, longitude],
-                popup=f'<strong>Dispositivo {i+1}</strong><br>Hora: {timestamp}',
-                tooltip=tooltip,
-                icon=icon
-            ).add_to(m)
+        icon = folium.features.CustomIcon(icon_image='C:/CercoVirtual/car_icon.png', icon_size=(15, 15))
+        # Agregar un marcador en cada ubicación
+        folium.Marker(
+            location=[latitude, longitude],
+            popup=f'<strong>Dispositivo {i+1}</strong><br>Hora: {timestamp}',
+            tooltip=tooltip,
+            icon=icon
+        ).add_to(m)
 
     # Unir las ubicaciones con flechas
     #for i in range(len(coord_list) - 1):
@@ -54,7 +60,6 @@ def folium_plot_locations(coord_list, isVirtualFence):
     
     m.save('C:\CercoVirtual\seguimiento.html')
     driver.refresh()
-
 
 def main():
     #coord_list = [-34.602867,-58.422269, '2023-11-15 12:30:00']
@@ -98,6 +103,7 @@ def main():
     begin_datetime = datetime.now()
     
     coord_list = []  # Lista para almacenar las coordenadas recibidas
+    coord_virtual_fence = {}    #Inicializo el cerco.
     
     while True:
         print('Esperando envio de datos')
@@ -126,8 +132,12 @@ def main():
 
                     # PLOTEO DE COORDENADAS
                     timestamp = datetime.now().strftime("%H:%M:%S")
-                    coord_list.append((latitude, longitude, timestamp))
-                    folium_plot_locations(coord_list, isVirtualFence)
+                    if isVirtualFence:
+                        coord_virtual_fence = (latitude, longitude, timestamp)
+                    else:
+                        coord_list.append((latitude, longitude, timestamp))
+
+                    folium_plot_locations(coord_list, isVirtualFence, coord_virtual_fence)
 
                     index += 1
                     row += 1 
