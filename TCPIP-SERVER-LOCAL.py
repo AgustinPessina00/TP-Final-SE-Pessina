@@ -57,11 +57,42 @@ def folium_plot_locations(coord_list):
     m.save('seguimiento.html')
     driver.refresh()
 
+
+
+def generar_mapa(coord_list):
+    m = folium.Map(location=coord_list[0][:2], zoom_start=15)
+
+    # Agregar marcadores en el mapa
+    for coord in coord_list:
+        latitude, longitude, timestamp = coord
+        folium.Marker(
+            location=[latitude, longitude],
+            popup=f'Hora: {timestamp}',
+            tooltip=f'Latitud: {latitude}, Longitud: {longitude}'
+        ).add_to(m)
+
+    # Unir las ubicaciones con polilíneas
+    for i in range(len(coord_list) - 1):
+        folium.PolyLine([coord_list[i][:2], coord_list[i+1][:2]], color="red", weight=2.5, opacity=1).add_to(m)
+
+    # Guardar el mapa como archivo HTML
+    m.save('seguimiento.html')
+
 def main():
     print('Bienvenido')
     print('Prefectura Naval Argentina')
     print('Departamento de Apoyo Tecnologico para el Analisis Criminal')
     print('Servidor TCP IP - Dispositivo Rastreador GPS')
+
+    # Ejemplo de coordenadas
+    coordenadas_ejemplo = [
+    [40.7128, -74.0060, '2023-11-15 12:30:00'],
+    [40.7211, -74.0030, '2023-11-15 12:45:00'],
+    # Agrega más coordenadas si es necesario
+    ]
+
+    # Generar el mapa con las coordenadas de ejemplo
+    generar_mapa(coordenadas_ejemplo)
     
     index = 0
     latency = 0
