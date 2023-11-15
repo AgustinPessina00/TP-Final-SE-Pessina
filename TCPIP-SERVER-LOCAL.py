@@ -23,24 +23,18 @@ chrome_service = Service(executable_path=r'C:\CercoVirtual\chromedriver.exe')
 driver = webdriver.Chrome(service=chrome_service)
 driver.get("file:///C:\CercoVirtual\seguimiento.html")
 
-#m = folium.Map(location=[0,0], zoom_start=15)
-#m.save('C:\CercoVirtual\seguimiento.html')
-
-#driver = webdriver.Chrome(executable_path=r'C:\CercoVirtual\chromedriver.exe')
-#driver.get("file:///C:\CercoVirtual\seguimiento.html")
-
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-#################################################
+#################################################################
 
 def folium_plot_locations(coord_list, isVirtualFence):
     m = folium.Map(location=coord_list[0][:2], zoom_start=15)
 
-    if isVirtualFence:
+    #if isVirtualFence:
         # Generar el cerco virtual
-        folium.Circle(location=coord_list[0][:2], color="orange",fill_collor="red",radius = 100,weight=4,fill_opacity = 0.8).add_to(m)
-    else:
+    #    folium.Circle(location=coord_list[0][:2], color="orange",fill_collor="red",radius = 100,weight=4,fill_opacity = 0.8).add_to(m)
+    #else:
         # Agregar un marcador en cada ubicación
         for i, coord in enumerate(coord_list):
             latitude, longitude = coord[:2]
