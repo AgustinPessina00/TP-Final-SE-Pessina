@@ -38,7 +38,7 @@ def folium_plot_locations(coord_list, isVirtualFence):
         icon = folium.features.CustomIcon(icon_image='C:/CercoVirtual/car_icon.png', icon_size=(10, 10))
         if isVirtualFence:
             # Generar el cerco virtual
-            folium.Circle(location=coord_list[0][:2], color="orange",fil_collor="red",radius = 100,weight=4,fill_opacity = 0.8).add_to(m)
+            folium.Circle(location=[latitude, longitude], color="orange",fil_collor="red",radius = 100,weight=4,fill_opacity = 0.8).add_to(m)
         else:
             # Agregar un marcador en cada ubicación
             folium.Marker(
@@ -126,8 +126,7 @@ def main():
 
                     # PLOTEO DE COORDENADAS
                     timestamp = datetime.now().strftime("%H:%M:%S")
-                    if not isVirtualFence:
-                        coord_list.append((latitude, longitude, timestamp))
+                    coord_list.append((latitude, longitude, timestamp))
                     folium_plot_locations(coord_list, isVirtualFence)
 
                     index += 1
