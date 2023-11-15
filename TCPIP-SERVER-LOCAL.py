@@ -31,14 +31,10 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #################################################
 
 def folium_plot_locations(coord_list):
-    # Antes de agregar marcadores y líneas, imprime las coordenadas para asegurarte de que son correctas
-    for coord in coord_list:
-        print(f"Latitud: {coord[0]}, Longitud: {coord[1]}, Hora: {coord[2]}")
-    
     m = folium.Map(location=coord_list[0][:2], zoom_start=15)
 
     # Agregar un marcador en cada ubicación
-    for i, coord in enumerate(coord_list):
+    """for i, coord in enumerate(coord_list):
         latitude, longitude = coord[:2]
         timestamp = coord[2]
         tooltip = f'Hora: {timestamp}'
@@ -53,46 +49,15 @@ def folium_plot_locations(coord_list):
     # Unir las ubicaciones con flechas
     for i in range(len(coord_list) - 1):
         folium.PolyLine([coord_list[i][:2], coord_list[i+1][:2]], color="red", weight=2.5, opacity=1).add_to(m)
-
+    """
     m.save('seguimiento.html')
     driver.refresh()
-
-
-
-def generar_mapa(coord_list):
-    m = folium.Map(location=coord_list[0][:2], zoom_start=15)
-
-    # Agregar marcadores en el mapa
-    for coord in coord_list:
-        latitude, longitude, timestamp = coord
-        folium.Marker(
-            location=[latitude, longitude],
-            popup=f'Hora: {timestamp}',
-            tooltip=f'Latitud: {latitude}, Longitud: {longitude}'
-        ).add_to(m)
-
-    # Unir las ubicaciones con polilíneas
-    for i in range(len(coord_list) - 1):
-        folium.PolyLine([coord_list[i][:2], coord_list[i+1][:2]], color="red", weight=2.5, opacity=1).add_to(m)
-
-    # Guardar el mapa como archivo HTML
-    m.save('seguimiento.html')
 
 def main():
     print('Bienvenido')
     print('Prefectura Naval Argentina')
     print('Departamento de Apoyo Tecnologico para el Analisis Criminal')
     print('Servidor TCP IP - Dispositivo Rastreador GPS')
-
-    # Ejemplo de coordenadas
-    coordenadas_ejemplo = [
-    [40.7128, -74.0060, '2023-11-15 12:30:00'],
-    [40.7211, -74.0030, '2023-11-15 12:45:00'],
-    # Agrega más coordenadas si es necesario
-    ]
-    # Generar el mapa con las coordenadas de ejemplo
-    generar_mapa(coordenadas_ejemplo)
-    print('Se genera mapa')
     
     index = 0
     latency = 0
