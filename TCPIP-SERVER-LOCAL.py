@@ -48,7 +48,7 @@ def folium_plot_locations(coord_list, isVirtualFence, coord_virtual_fence):
             tooltip=tooltip
         ).add_to(m)
     
-    if not isVirtualFence:
+    if coord_list:
         for i, coord in enumerate(coord_list):
             latitude, longitude = coord[:2]
             timestamp = coord[2]
