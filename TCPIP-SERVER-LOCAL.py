@@ -30,13 +30,14 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 def folium_plot_locations(coord_list, isVirtualFence):
     m = folium.Map(location=coord_list[0][:2], zoom_start=15)
-
+    
+    # Generar el cerco virtual
     if isVirtualFence:
-        # Generar el cerco virtual
+        print('Es cerco virtual')
         folium.Circle(location=coord_list[0][:2], color="orange",fil_collor="red",radius = 100,weight=4,fill_opacity = 0.8).add_to(m)
-
+    # Agregar un marcador en cada ubicación
     if not isVirtualFence:
-        # Agregar un marcador en cada ubicación
+        print('No es cerco virtual')
         for i, coord in enumerate(coord_list):
             latitude, longitude = coord[:2]
             timestamp = coord[2]
