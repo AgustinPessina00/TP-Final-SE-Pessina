@@ -240,7 +240,7 @@ void gsmGprsCom::connect( ) {
                 this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIFSR_TO_BE_SEND;
                 #ifdef DEBUG
                 uartUsb.write ( "\r\n",  3 );  // debug only
-                numberOfTries++;
+                numberOfTries++;                                            //NOTA MIA: DEBERÍA IR FUERA DEL DEBUG.
                 char msg []  = "AT+CIFSR command responded NOT correctly \r\n";
                 uartUsb.write (msg, strlen (msg));  // debug only
                 uartUsb.write ( "\r\n",  3 );  // debug only
@@ -258,7 +258,7 @@ void gsmGprsCom::connect( ) {
                this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIPSTART_TO_BE_SEND;
                 #ifdef DEBUG
                 uartUsb.write ( "\r\n",  3 );  // debug only
-                numberOfTries++;
+                numberOfTries++;                                            //NOTA MIA: DEBERÍA IR FUERA DEL DEBUG.
                 char msg []  = "AT+CIPSTART command responded NOT correctly \r\n";
                 uartUsb.write (msg, strlen (msg));  // debug only
                 uartUsb.write ( "\r\n",  3 );  // debug only
@@ -566,7 +566,7 @@ void gsmGprsCom::checkATPLUSCIPSENDcommand ()  {
 */
 void gsmGprsCom::sendATPLUSCIPSENDcommand (int stringlen)  {
     char strToSend[50] = "";
-   sprintf( strToSend, "AT+CIPSEND=%d\r\n", stringlen);
+    sprintf( strToSend, "AT+CIPSEND=%d\r\n", stringlen);
     this->write(strToSend);
     uartUsb.write ("\r\n ", 3 );  // debug on
     this->refreshDelay->write( REFRESH_TIME_1000MS);
