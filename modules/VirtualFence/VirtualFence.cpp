@@ -4,7 +4,7 @@
 
 //=====[Declaration of private defines]========================================
 
-#define NUMBER_OF_FENCES    4
+#define NUMBER_OF_FENCES    2
 #define FENCE_DURATION      50000
 #define FENCE_RADIO         300
 #define LATENCY             20000
@@ -19,8 +19,8 @@
 
 //=====[Declaration and initialization of private global variables]============
 
-static float fenceLatitudes[NUMBER_OF_FENCES] = {1, 2, 3 , 4};
-static float fenceLongitudes[NUMBER_OF_FENCES] = {1, 2, 3, 4};
+static float fenceLatitudes[NUMBER_OF_FENCES] = {-34.602729, -34.603278};
+static float fenceLongitudes[NUMBER_OF_FENCES] = {-58.422540, -58.418032};
 
 //=====[Declarations (prototypes) of private functions]========================
 
@@ -94,7 +94,7 @@ void virtualFence::fenceUpdate() {
 }
 
 void virtualFence::fenceSend() {
-
+    
 }
 
 //=====[Implementations of private methods]====================================
