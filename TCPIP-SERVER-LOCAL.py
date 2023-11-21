@@ -105,7 +105,7 @@ def main():
 
     ######### INICIANDO SERVIDOR TCP/IP##########
     begin_datetime = datetime.now()
-    server_address = ('192.168.1.33', 123)
+    server_address = ('192.168.0.45', 123)
     print('Iniciando en {} Puerto {}'.format(*server_address))
     sock.bind(server_address)
     sock.listen(1)

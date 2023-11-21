@@ -6,7 +6,6 @@
 #include "string.h"
 #include "nonBlockingDelay.h"
 
-
 //=====[Declaration of private defines]========================================
 #define REFRESH_TIME_10MS         10
 #define REFRESH_TIME_1000MS       1000
