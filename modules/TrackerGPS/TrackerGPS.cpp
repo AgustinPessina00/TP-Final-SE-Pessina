@@ -68,7 +68,7 @@ void trackerGPS::positionUpdate ( char * str)
     }
     readyToReadNewGeo = true;
 //  timeToSend = false;
-    } 
+//  } 
 }
 
 //=====[Implementations of private functions]==================================
