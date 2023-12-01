@@ -4,7 +4,7 @@
 
 //=====[Declaration of private defines]========================================
 
-#define LATENCY     20000
+//#define LATENCY     20000
 
 //=====[Declaration of private data types]=====================================
 
@@ -30,8 +30,7 @@ BufferedSerial uartGPSCom( PG_14, PG_9, 9600 );
 /** 
 * @brief Contructor method creates a new trackerGPS instance ready to be used
 */
-trackerGPS::trackerGPS ()
-{
+trackerGPS::trackerGPS () {
     this->gsmGprs = new gsmGprsCom( );
     this->numberOfDevice = 1;
     LED = ON;
@@ -46,17 +45,16 @@ trackerGPS::trackerGPS ()
 * then the tracker will connect his GSM GPRS module to the GSM GPRS network, when it succeded the module will connect to a TCP Server
 * after that the data will be sent, the TCP it's dropped, and a new delay is set and the process will be repeated.
 */
-void trackerGPS::positionUpdate ( char * str)
-{
+void trackerGPS::positionUpdate ( char * str) {
     char c  = '\0';
     static bool readyToReadNewGeo = true;
-//  static bool timeToSend = false;
+    static bool timeToSend = false;
     float flat, flon;
     unsigned long age;
-/*
-    if( this->latency->read() || (timeToSend == true) ) {
-        timeToSend = true;
-*/
+
+    //if( this->latency->read() || (timeToSend == true) ) {
+    //    timeToSend = true;
+
     while ( uartGPSCom.readable() ) {
         uartGPSCom.read(&c, 1); 
         if (encode(c) && (readyToReadNewGeo == true)) {
@@ -67,8 +65,8 @@ void trackerGPS::positionUpdate ( char * str)
         }
     }
     readyToReadNewGeo = true;
-//  timeToSend = false;
-//  } 
-}
+    //timeToSend = false;
+} 
+//}
 
 //=====[Implementations of private functions]==================================

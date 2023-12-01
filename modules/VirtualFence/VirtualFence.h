@@ -19,10 +19,7 @@ public:
     virtualFence();
     void update();
     void fenceUpdate();
-    void fenceSend();
-    bool getStateFence();
-    float getFenceLatitude();
-    float getFenceLongitude();
+    void stimulusUpdate();
 private:
 //=====[Declaration of privates atributes]=====================================
     bool fenceToSend;

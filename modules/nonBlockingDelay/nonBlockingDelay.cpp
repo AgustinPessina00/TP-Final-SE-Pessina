@@ -24,7 +24,7 @@ tick_t tickRead( );
 //=====[Implementations of private methods]====================================
 
 void nonBlockingDelay::tickInit() {
-    this->ticker.attach( tickerCallback, 1ms );
+    this->ticker.attach( tickerCallback, 10ms );
 }
 
 //=====[Implementations of public methods]=====================================

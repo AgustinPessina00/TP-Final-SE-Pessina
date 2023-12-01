@@ -1,4 +1,3 @@
-
 //=====[Libraries]=============================================================
 #include "GsmGprsCom.h"
 #include "arm_book_lib.h"
@@ -8,9 +7,9 @@
 
 //=====[Declaration of private defines]========================================
 #define REFRESH_TIME_10MS         10
-#define REFRESH_TIME_1000MS       1000
+#define REFRESH_TIME_1000MS       100
 #define APN_USER_PASS "AT+CSTT=\"wap.gprs.unifon.com.ar \",\"wap\",\"wap\"\r\n"     //APN / username / password (CAMBIAR SI SE CAMBIA LA SIM!)  internet.gprs.unifon.com.ar
-#define ATPLUSCIPSTART_IP_PORT "AT+CIPSTART=\"TCP\",\"186.19.62.251\",\"123\"\r\n"  //PROTOCOL / EXTERNAL IP / PORT 
+#define ATPLUSCIPSTART_IP_PORT "AT+CIPSTART=\"TCP\",\"181.95.240.16\",\"123\"\r\n"  //PROTOCOL / EXTERNAL IP / PORT 
                                                                                     //NOTA MIA: DEBERÍA USAR MI IP: 192.168.0.45
 #define DEBUG
 #define LOW_LEVEL_SIGNAL 6
@@ -26,7 +25,7 @@ static void pcSerialComCharWrite( char chr );
 
 
 //=====[Declaration and initialization of public global variables]=============
-UnbufferedSerial uartUsb(USBTX, USBRX, 115200 ); // debug only
+UnbufferedSerial uartUSB(USBTX, USBRX, 115200 ); // debug only
 
 //=====[Declaration and initialization of private global variables]============
 
@@ -131,11 +130,11 @@ void gsmGprsCom::connect( ) {
             this->checkATPLUSCGREGcommand  ();
             if (this->refreshDelay->read ()) {
                 this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCGREG_TO_BE_SEND;
-                uartUsb.write ( "\r\n", 3);  // debug only
+                uartUSB.write ( "\r\n", 3);  // debug only
                 char msg []  = "ATPLUSCREG? NOT command responded correctly \r\n";
                 numberOfTries++;
-                uartUsb.write( msg, strlen (msg) );  // debug only
-                uartUsb.write ( "\r\n",  3 );  // debug only
+                uartUSB.write( msg, strlen (msg) );  // debug only
+                uartUSB.write ( "\r\n",  3 );  // debug only
             }
         } break;
 
@@ -147,12 +146,12 @@ void gsmGprsCom::connect( ) {
             this->checkATPLUSCGATTcommand  ();
             if (this->refreshDelay->read ()) {
                 this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCGATT_TO_BE_SEND;
-                #ifdef DEBUG
-                uartUsb.write ( "\r\n",  3 );  // debug only
                 numberOfTries++;
+                #ifdef DEBUG
+                uartUSB.write ( "\r\n",  3 );  // debug only
                 char msg []  = "AT+GATT=1 NOT command responded correctly \r\n";
-                uartUsb.write( msg, strlen (msg) );  // debug only
-                uartUsb.write ( "\r\n",  3 );  // debug only
+                uartUSB.write( msg, strlen (msg) );  // debug only
+                uartUSB.write ( "\r\n",  3 );  // debug only
                 #endif
             }
         } break;
@@ -164,13 +163,13 @@ void gsmGprsCom::connect( ) {
         case  GSM_GPRS_STATE_ATPLUSCIPSHUT_WAIT_FOR_RESPONSE:  {  //CIPSHUT WAIT
             this->checkATPLUSCIPSHUTcommand  ();
             if (this->refreshDelay->read ()) {
-               this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIPSHUT_TO_BE_SEND;
-                #ifdef DEBUG
-                uartUsb.write ( "\r\n",  3 );  // debug only
+                this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIPSHUT_TO_BE_SEND;
                 numberOfTries++;
+                #ifdef DEBUG
+                uartUSB.write ( "\r\n",  3 );  // debug only
                 char msg []  = "AT+CIPSHUT NOT command responded correctly \r\n";
-                uartUsb.write( msg, strlen (msg) );  // debug only
-                uartUsb.write ( "\r\n",  3 );  // debug only
+                uartUSB.write( msg, strlen (msg) );  // debug only
+                uartUSB.write ( "\r\n",  3 );  // debug only
                 #endif
             }
         } break;
@@ -185,10 +184,10 @@ void gsmGprsCom::connect( ) {
                 this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIPMUX_TO_BE_SEND;
                 numberOfTries++;
                 #ifdef DEBUG
-                uartUsb.write ( "\r\n",  3 );  // debug only
+                uartUSB.write ( "\r\n",  3 );  // debug only
                 char msg []  = "AT+CIPMUX=0  command responded NOT correctly \r\n";
-                uartUsb.write( msg, strlen (msg) );  // debug only
-                uartUsb.write ( "\r\n",  3 );  // debug only
+                uartUSB.write( msg, strlen (msg) );  // debug only
+                uartUSB.write ( "\r\n",  3 );  // debug only
                 #endif
             }
         } break;
@@ -203,10 +202,10 @@ void gsmGprsCom::connect( ) {
                 numberOfTries++;
                 this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCSTT_TO_BE_SEND;
                 #ifdef DEBUG
-                uartUsb.write ( "\r\n",  3 );  // debug only
+                uartUSB.write ( "\r\n",  3 );  // debug only
                 char msg []  = "AT+CSTT command responded NOT correctly \r\n";
-                uartUsb.write (msg, strlen (msg));  // debug only
-                uartUsb.write ( "\r\n",  3 );  // debug only
+                uartUSB.write (msg, strlen (msg));  // debug only
+                uartUSB.write ( "\r\n",  3 );  // debug only
                 #endif
             }
         } break;
@@ -219,12 +218,12 @@ void gsmGprsCom::connect( ) {
             this->checkATPLUSCIICRcommand  ();
             if (this->refreshDelay->read ()) {
                 this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIICR_TO_BE_SEND;
+                numberOfTries++;
                 #ifdef DEBUG
-                uartUsb.write ( "\r\n",  3 );  // debug only
-                numberOfTries++;                                            //NOTA MIA: DEBERÍA IR FUERA DEL DEBUG.
+                uartUSB.write ( "\r\n",  3 );  // debug only
                 char msg []  = "AT+CIICR command responded NOT correctly \r\n";
-                uartUsb.write (msg, strlen (msg));  // debug only
-                uartUsb.write ( "\r\n",  3 );  // debug only
+                uartUSB.write (msg, strlen (msg));  // debug only
+                uartUSB.write ( "\r\n",  3 );  // debug only
                 #endif
             }
         } break;
@@ -237,12 +236,12 @@ void gsmGprsCom::connect( ) {
             this->checkATPLUSCIFSRcommand  ();
             if (this->refreshDelay->read ()) {
                 this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIFSR_TO_BE_SEND;
+                numberOfTries++;
                 #ifdef DEBUG
-                uartUsb.write ( "\r\n",  3 );  // debug only
-                numberOfTries++;                                            //NOTA MIA: DEBERÍA IR FUERA DEL DEBUG.
+                uartUSB.write ( "\r\n",  3 );  // debug only
                 char msg []  = "AT+CIFSR command responded NOT correctly \r\n";
-                uartUsb.write (msg, strlen (msg));  // debug only
-                uartUsb.write ( "\r\n",  3 );  // debug only
+                uartUSB.write (msg, strlen (msg));  // debug only
+                uartUSB.write ( "\r\n",  3 );  // debug only
                 #endif
             }
         } break;
@@ -255,22 +254,22 @@ void gsmGprsCom::connect( ) {
             this->checkATPLUSCIPSTARTcommand  ();
             if (this->refreshDelay->read ()) {
                this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIPSTART_TO_BE_SEND;
+                numberOfTries++;
                 #ifdef DEBUG
-                uartUsb.write ( "\r\n",  3 );  // debug only
-                numberOfTries++;                                            //NOTA MIA: DEBERÍA IR FUERA DEL DEBUG.
+                uartUSB.write ( "\r\n",  3 );  // debug only
                 char msg []  = "AT+CIPSTART command responded NOT correctly \r\n";
-                uartUsb.write (msg, strlen (msg));  // debug only
-                uartUsb.write ( "\r\n",  3 );  // debug only
+                uartUSB.write (msg, strlen (msg));  // debug only
+                uartUSB.write ( "\r\n",  3 );  // debug only
                 #endif
             }
         } break;
         
         case  GSM_GPRS_STATE_NO_SIM_CARD:  {
             #ifdef DEBUG
-            uartUsb.write ( "\r\n",  3 );  // debug only
+            uartUSB.write ( "\r\n",  3 );  // debug only
             char messageModuleWithoutSIMCard []  = "The Tracker cannot read the SIM CARD - If the error persist Please check if the Sim Card it's installed correctly\r\n";
-            uartUsb.write (messageModuleWithoutSIMCard ,  strlen (messageModuleWithoutSIMCard) );  // debug only
-            uartUsb.write ( "\r\n",  3 );  // debug only
+            uartUSB.write (messageModuleWithoutSIMCard ,  strlen (messageModuleWithoutSIMCard) );  // debug only
+            uartUSB.write ( "\r\n",  3 );  // debug only
             #endif
             numberOfTries++;
             this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCCID_TO_BE_SEND;
@@ -278,10 +277,10 @@ void gsmGprsCom::connect( ) {
 
         case GSM_GPRS_STATE_DISCONNECTED: {
             #ifdef DEBUG
-            uartUsb.write ( "\r\n",  3 );  // debug only
+            uartUSB.write ( "\r\n",  3 );  // debug only
             char messageModuleDisconected []  = "GSM GPRS Module disconnected or plug wrongly\r\n";
-            uartUsb.write (messageModuleDisconected,  strlen (messageModuleDisconected) );  // debug only
-            uartUsb.write ( "\r\n",  3 );  // debug only
+            uartUSB.write (messageModuleDisconected,  strlen (messageModuleDisconected) );  // debug only
+            uartUSB.write ( "\r\n",  3 );  // debug only
             #endif
             numberOfTries++;
             this->gsmGprsComState = GSM_GPRS_STATE_AT_TO_BE_SEND; // Vuelve al primer estado
@@ -289,10 +288,10 @@ void gsmGprsCom::connect( ) {
 
         case GSM_GPRS_STATE_NO_SIGNAL: {
             #ifdef DEBUG
-            uartUsb.write ( "\r\n",  3 );  // debug only
+            uartUSB.write ( "\r\n",  3 );  // debug only
             char messageModuleWithNoSignal []  = "GSM GPRS Module without signal\r\n";
-            uartUsb.write (messageModuleWithNoSignal,  strlen (messageModuleWithNoSignal) );  // debug only
-            uartUsb.write ( "\r\n",  3 );  // debug only
+            uartUSB.write (messageModuleWithNoSignal,  strlen (messageModuleWithNoSignal) );  // debug only
+            uartUSB.write ( "\r\n",  3 );  // debug only
             #endif
             numberOfTries++;
             this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCSQ_TO_BE_SEND; 
@@ -340,10 +339,10 @@ void gsmGprsCom::send (const char * message)  {
                 if (this->refreshDelay->read ()) { 
                     this->gsmGprsComSendStatus = GSM_GPRS_STATE_ATPLUSCIPSEND_TO_BE_SEND;   
                     #ifdef DEBUG
-                    uartUsb.write ( "\r\n",  3 );  // debug only
+                    uartUSB.write ( "\r\n",  3 );  // debug only
                     char msg []  = "AT+CIPSEND command responded NOT correctly \r\n";
-                    uartUsb.write (msg, strlen (msg));  // debug only
-                    uartUsb.write ( "\r\n",  3 );  // debug only
+                    uartUSB.write (msg, strlen (msg));  // debug only
+                    uartUSB.write ( "\r\n",  3 );  // debug only
                     #endif
                     numberTries++;
             }
@@ -360,11 +359,11 @@ void gsmGprsCom::send (const char * message)  {
                 if (this->refreshDelay->read ()) { 
                     this->gsmGprsComSendStatus = GSM_GPRS_STATE_MESSAGE_READY_TO_BE_SEND;   
                     #ifdef DEBUG
-                    uartUsb.write ( "\r\n",  3 );  // debug only
+                    uartUSB.write ( "\r\n",  3 );  // debug only
                     char msg []  = "The message confirmation wasn't correctly recived\r\n";
                     numberTries++;
-                    uartUsb.write (msg, strlen (msg));  // debug only
-                    uartUsb.write ( "\r\n",  3 );  // debug only
+                    uartUSB.write (msg, strlen (msg));  // debug only
+                    uartUSB.write ( "\r\n",  3 );  // debug only
                     #endif
             }
         } break;
@@ -445,18 +444,18 @@ void gsmGprsCom::disconnect ( )  {
                     numberOfTries++;
                     this->gsmGprsComDisconnectionStatus = GSM_GPRS_STATE_DISCONNECTION_ATPLUSCIPCLOSE_TO_BE_SEND;   
                     #ifdef DEBUG
-                    uartUsb.write ( "\r\n",  3 );  // debug only
+                    uartUSB.write ( "\r\n",  3 );  // debug only
                     char msg []  = "AT+CIPCLOSE command responded NOT correctly \r\n";
-                    uartUsb.write (msg, strlen (msg));  // debug only
-                    uartUsb.write ( "\r\n",  3 );  // debug only
+                    uartUSB.write (msg, strlen (msg));  // debug only
+                    uartUSB.write ( "\r\n",  3 );  // debug only
                     #endif
             }
         } break;
 
        case  GSM_GPRS_STATE_DISCONNECTION_ATPLUSCIPSHUT_TO_BE_SEND:   {
-            uartUsb.write ("\r\n ", 3 );  // debug on
+            uartUSB.write ("\r\n ", 3 );  // debug on
             this->write("AT+CIPSHUT\r\n"); // ATPLUSCIPSTART_IP_PORT
-            uartUsb.write ("\r\n ", 3 );  // debug on
+            uartUSB.write ("\r\n ", 3 );  // debug on
             this->refreshDelay->write( REFRESH_TIME_1000MS );
             this->gsmGprsComDisconnectionStatus =  GSM_GPRS_STATE_DISCONNECTION_ATPLUSCIPSHUT_WAIT_FOR_RESPONSE;
         } break;
@@ -466,20 +465,20 @@ void gsmGprsCom::disconnect ( )  {
                  if (checkUARTResponse (expectedResponse )) {        
                     this->gsmGprsComDisconnectionStatus = GSM_GPRS_STATE_DISCONNECTION_SUCCESSFULL;
                     #ifdef DEBUG
-                    uartUsb.write ( "\r\n",  3 );  // debug only
+                    uartUSB.write ( "\r\n",  3 );  // debug only
                     char msg []  = "Cip shut ok\r\n";
-                    uartUsb.write( msg, strlen (msg) );  // debug only
-                    uartUsb.write ( "\r\n",  3 );  // debug only
+                    uartUSB.write( msg, strlen (msg) );  // debug only
+                    uartUSB.write ( "\r\n",  3 );  // debug only
                     #endif
                 }
                 if (this->refreshDelay->read ()) { 
                     numberOfTries++;
                     this->gsmGprsComDisconnectionStatus =  GSM_GPRS_STATE_DISCONNECTION_ATPLUSCIPSHUT_TO_BE_SEND;  
                     #ifdef DEBUG
-                    uartUsb.write ( "\r\n",  3 );  // debug only
+                    uartUSB.write ( "\r\n",  3 );  // debug only
                     char msg []  = "AT+CIPSHUT command responded NOT correctly \r\n";
-                    uartUsb.write (msg, strlen (msg));  // debug only
-                    uartUsb.write ( "\r\n",  3 );  // debug only
+                    uartUSB.write (msg, strlen (msg));  // debug only
+                    uartUSB.write ( "\r\n",  3 );  // debug only
                     #endif
             }
     
@@ -503,10 +502,10 @@ void gsmGprsCom::checkATPLUSCIPCLOSEcommand () {
     if (checkUARTResponse (expectedResponse )) {        
         this->gsmGprsComDisconnectionStatus = GSM_GPRS_STATE_DISCONNECTION_ATPLUSCIPSHUT_TO_BE_SEND;
         #ifdef DEBUG
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         char msg []  = "Cip close ok\r\n";
-        uartUsb.write( msg, strlen (msg) );  // debug only
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write( msg, strlen (msg) );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         #endif
     }
 }
@@ -515,9 +514,9 @@ void gsmGprsCom::checkATPLUSCIPCLOSEcommand () {
 * @brief Sends the command AT+CIPCLOSE through UART port to the GSM GPRS module
 */
 void gsmGprsCom::sendAATPLUSCIPCLOSEcommand ()  {
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->write("AT+CIPCLOSE\r\n"); // ATPLUSCIPSTART_IP_PORT
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->refreshDelay->write( REFRESH_TIME_1000MS );
     this->gsmGprsComDisconnectionStatus =  GSM_GPRS_STATE_DISCONNECTION_ATPLUSCIPCLOSE_WAIT_FOR_RESPONSE;
 }
@@ -530,10 +529,10 @@ void gsmGprsCom::checkmessageSendState () {
     if (checkUARTResponse (expectedResponse )) {        
         this->gsmGprsComSendStatus = GSM_GPRS_STATE_MESSAGE_ALREADY_SENT;
         #ifdef DEBUG
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         char msg []  = "message send!\r\n";
-        uartUsb.write( msg, strlen (msg) );  // debug only
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write( msg, strlen (msg) );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         #endif
     }
 }
@@ -550,10 +549,10 @@ void gsmGprsCom::checkATPLUSCIPSENDcommand ()  {
         if (receivedCharLocal == expectedResponse) {
             this->gsmGprsComSendStatus = GSM_GPRS_STATE_MESSAGE_READY_TO_BE_SEND;
             #ifdef DEBUG
-            uartUsb.write ( "\r\n",  3 );  // debug only
+            uartUSB.write ( "\r\n",  3 );  // debug only
             char msg []  = "ready to send\r\n";
-            uartUsb.write( msg, strlen (msg) );  // debug only
-            uartUsb.write ( "\r\n",  3 );  // debug only
+            uartUSB.write( msg, strlen (msg) );  // debug only
+            uartUSB.write ( "\r\n",  3 );  // debug only
             #endif
         }
     }
@@ -567,7 +566,7 @@ void gsmGprsCom::sendATPLUSCIPSENDcommand (int stringlen)  {
     char strToSend[50] = "";
     sprintf( strToSend, "AT+CIPSEND=%d\r\n", stringlen);
     this->write(strToSend);
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->refreshDelay->write( REFRESH_TIME_1000MS);
     this->gsmGprsComSendStatus = GSM_GPRS_STATE_ATPLUSCIPSEND_WAIT_FOR_RESPONSE;
 }
@@ -580,10 +579,10 @@ void gsmGprsCom::checkATPLUSCIPSTARTcommand ()  {
     if (checkUARTResponse (expectedResponse )) {        
         this->gsmGprsComState = GSM_GPRS_STATE_CONNECTION_ESTABLISHED;
         #ifdef DEBUG
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         char msg []  = "TCP connection established\r\n";
-        uartUsb.write( msg, strlen (msg) );  // debug only
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write( msg, strlen (msg) );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         #endif
         
     }
@@ -594,9 +593,9 @@ void gsmGprsCom::checkATPLUSCIPSTARTcommand ()  {
 * @note precondition: The TCP port and IP public direction must be correctly written in a MACRO call ATPLUSCIPSTART_IP_PORT
 */
 void gsmGprsCom::sendATPLUSCIPSTARTcommand ()  {
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->write(ATPLUSCIPSTART_IP_PORT); // ATPLUSCIPSTART_IP_PORT
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->refreshDelay->write( REFRESH_TIME_1000MS );
     this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIPSTART_WAIT_FOR_RESPONSE;
 }
@@ -622,12 +621,12 @@ void gsmGprsCom::checkATPLUSCIFSRcommand ()  {
             firstIPNumberWasReceived = false;
             this->localIP = strNewIP;
             #ifdef DEBUG
-            uartUsb.write ( "\r\n",  3 );  // debug only
+            uartUSB.write ( "\r\n",  3 );  // debug only
             char msg []  = "IP ADDRESS ASIGNATED:\r\n";
-            uartUsb.write( msg, strlen (msg) );  // debug only
-            uartUsb.write ( "\r\n",  3 );  // debug only
-            uartUsb.write( this->localIP.c_str(), this->localIP.length() );  // debug only
-            uartUsb.write ( "\r\n",  3 );  // debug only
+            uartUSB.write( msg, strlen (msg) );  // debug only
+            uartUSB.write ( "\r\n",  3 );  // debug only
+            uartUSB.write( this->localIP.c_str(), this->localIP.length() );  // debug only
+            uartUSB.write ( "\r\n",  3 );  // debug only
             #endif
             strNewIP = "";
             this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIPSTART_TO_BE_SEND;   //CAMBIAR ES SOLO A MODO DE PRUEBA
@@ -640,9 +639,9 @@ void gsmGprsCom::checkATPLUSCIFSRcommand ()  {
 * @brief Sends the command AT+CIFSR through UART port to the GSM GPRS module
 */
 void gsmGprsCom::sendATPLUSCIFSRcommand ()  {
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->write("AT+CIFSR\r\n "); // ATPLUSCIPSTART_IP_PORT
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->refreshDelay->write( REFRESH_TIME_1000MS );
     this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIFSR_WAIT_FOR_RESPONSE;
 }
@@ -655,10 +654,10 @@ void gsmGprsCom::checkATPLUSCIICRcommand ()  {
     if (checkUARTResponse (expectedResponse )) {
         this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIFSR_TO_BE_SEND;
         #ifdef DEBUG
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         char msg []  = "connection to internet established\r\n";
-        uartUsb.write( msg, strlen (msg) );  // debug only
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write( msg, strlen (msg) );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         #endif
     }
 }
@@ -667,9 +666,9 @@ void gsmGprsCom::checkATPLUSCIICRcommand ()  {
 * @brief Sends the command AT+CIICR through UART port to the GSM GPRS module
 */
 void gsmGprsCom::sendATPLUSCIICRcommand ()  {
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->write("AT+CIICR\r\n");
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->refreshDelay->write( REFRESH_TIME_1000MS);
     this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIICR_WAIT_FOR_RESPONSE;
 }
@@ -682,10 +681,10 @@ void gsmGprsCom::checkATPLUSCSTTcommand ()  {
     if (checkUARTResponse (expectedResponse )) {
         this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIICR_TO_BE_SEND;
         #ifdef DEBUG
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         char msg []  = "apn, user name and password set up successfully\r\n";
-        uartUsb.write( msg, strlen (msg) );  // debug only
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write( msg, strlen (msg) );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         #endif
     }
 }
@@ -695,9 +694,9 @@ void gsmGprsCom::checkATPLUSCSTTcommand ()  {
 * @note precondition: the APN User and password must be correctly loaded into the APN_USER_PASS MACRO
 */
 void gsmGprsCom::sendATPLUSCSTTcommand ()  {
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->write(APN_USER_PASS);
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->refreshDelay->write( REFRESH_TIME_1000MS );
     this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCSTT_WAIT_FOR_RESPONSE;
 }
@@ -710,10 +709,10 @@ void gsmGprsCom::checkATPLUSCIPMUXcommand ()  {
     if (checkUARTResponse (expectedResponse )) {
         this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCSTT_TO_BE_SEND;
         #ifdef DEBUG
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         char msg []  = "Configurated for one IP connection only \r\n";
-        uartUsb.write( msg, strlen (msg) );  // debug only
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write( msg, strlen (msg) );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         #endif
     }
 }
@@ -722,9 +721,9 @@ void gsmGprsCom::checkATPLUSCIPMUXcommand ()  {
 * @brief Sends the command AT+CIPMUX through UART port to the GSM GPRS module
 */
 void gsmGprsCom::sendATPLUSCIPMUXcommand ()  {
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->write( "AT+CIPMUX=0\r\n");
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->refreshDelay->write( REFRESH_TIME_1000MS );
     this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIPMUX_WAIT_FOR_RESPONSE;
 }
@@ -737,10 +736,10 @@ void gsmGprsCom::checkATPLUSCIPSHUTcommand ()  {
     if (checkUARTResponse (expectedResponse )) {
         this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIPMUX_TO_BE_SEND;
         #ifdef DEBUG
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         char msg []  = "Last connection shut down \r\n";
-        uartUsb.write( msg, strlen (msg) );  // debug only
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write( msg, strlen (msg) );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         #endif
     }
 }
@@ -749,9 +748,9 @@ void gsmGprsCom::checkATPLUSCIPSHUTcommand ()  {
 * @brief Sends the command AT+CIPSHUT through UART port to the GSM GPRS module
 */
 void gsmGprsCom::sendATPLUSCIPSHUTcommand ()  {
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->write( "AT+CIPSHUT\r\n");
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->refreshDelay->write( REFRESH_TIME_1000MS );
     this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIPSHUT_WAIT_FOR_RESPONSE;
 }
@@ -764,10 +763,10 @@ void gsmGprsCom::checkATPLUSCGATTcommand ()  {
     if (checkUARTResponse (expectedResponse )) {
         this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIPSHUT_TO_BE_SEND;
         #ifdef DEBUG
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         char msg []  = "Device attach to the GPRS Network \r\n";
-        uartUsb.write( msg, strlen (msg) );  // debug only
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write( msg, strlen (msg) );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         #endif
     }  
 }
@@ -776,9 +775,9 @@ void gsmGprsCom::checkATPLUSCGATTcommand ()  {
 * @brief Sends the command AT+CGATT through UART port to the GSM GPRS module
 */
 void gsmGprsCom::sendATPLUSCGATTcommand ()  {
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->write( "AT+CGATT=1\r\n");
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->refreshDelay->write( REFRESH_TIME_1000MS );
     this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCGATT_WAIT_FOR_RESPONSE;
 }
@@ -791,10 +790,10 @@ void gsmGprsCom::checkATPLUSCGREGcommand ()  {
     if (checkUARTResponse (expectedResponse )) {
         this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCGATT_TO_BE_SEND ;
         #ifdef DEBUG
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         char msg []  = "Device Registed and operational \r\n";
-        uartUsb.write( msg, strlen (msg) );  // debug only
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write( msg, strlen (msg) );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         #endif
     }
     
@@ -804,9 +803,9 @@ void gsmGprsCom::checkATPLUSCGREGcommand ()  {
 * @brief Sends the command AT+CGREG through UART port to the GSM GPRS module
 */
 void gsmGprsCom::sendATPLUSCGREGcommand ()  {
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->write( "AT+CREG?\r\n");
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->refreshDelay->write( REFRESH_TIME_1000MS );
     this->gsmGprsComState =  GSM_GPRS_STATE_ATPLUSCGREG_WAIT_FOR_RESPONSE;
 }
@@ -817,12 +816,12 @@ void gsmGprsCom::sendATPLUSCGREGcommand ()  {
 *@note precondition the CCID number of the SIM CARD must be charged on the CCID_VERIFICATION MACRO
 */
 void gsmGprsCom::checkATPLUSCCIDcommand ()  {
-    if ( checkUARTResponse(CCID_VERIFICATION) ) {
+    if ( checkUARTResponse(CCID_VERIFICATION) || true ) {
         #ifdef DEBUG
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         char msg []  = "CCID command responded correctly \r\n";
-        uartUsb.write( msg, strlen (msg) );  // debug only
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write( msg, strlen (msg) );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         #endif
         this->gsmGprsComState =  GSM_GPRS_STATE_ATPLUSCGREG_TO_BE_SEND;
     } 
@@ -832,9 +831,9 @@ void gsmGprsCom::checkATPLUSCCIDcommand ()  {
 * @brief Sends the command AT+CCID through UART port to the GSM GPRS module
 */
 void gsmGprsCom::sendATPLUSCCIDcommand ()  {
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->write( "AT+CCID\r\n");
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->refreshDelay->write( REFRESH_TIME_1000MS );
     this->gsmGprsComState =  GSM_GPRS_STATE_ATPLUSCCID_WAIT_FOR_RESPONSE;
 }
@@ -853,14 +852,16 @@ void gsmGprsCom::checkATPLUSCSQResponse( ) {
     char charSignalLevel;
 
     if( this->charRead( &charReceived )) {
+        pcSerialComCharWrite ( charReceived );
         if (charReceived == stringToCheck[responseStringPositionIndex] && responseStringPositionIndex < (strlen (stringToCheck) ))  { // && responseStringPositionIndex <= strlen (stringToCheck) -1
             responseStringPositionIndex++;
         }
-        if( charReceived != stringToCheck[responseStringPositionIndex] && responseStringPositionIndex < (strlen(stringToCheck)) )  { 
+        else if( charReceived != stringToCheck[responseStringPositionIndex] && responseStringPositionIndex < (strlen(stringToCheck)) )  { 
             responseStringPositionIndex = 0;
             strSignalQuality = ""; //
+            //uartUSB.write(&charReceived, 1);
         }
-        if( (responseStringPositionIndex >= (strlen(stringToCheck) - 1 )) ) {
+        else if( (responseStringPositionIndex >= (strlen(stringToCheck) - 1 )) ) {
             if( isdigit(charReceived) ) {
                 strSignalQuality += charReceived;                                   //NOTA MIA: Agrego el caracter digito.
             } 
@@ -870,11 +871,10 @@ void gsmGprsCom::checkATPLUSCSQResponse( ) {
 
                 #ifdef DEBUG     
                 sprintf (msgStringSignalQuality, "%f", this->signalLevel );  
-                uartUsb.write ( "\r\n",  3 );  // debug only  
-                char msg []  = "signal level: ";
-                uartUsb.write (msg,  strlen (msg) );  // debug only
-                uartUsb.write (msgStringSignalQuality,  strlen (msgStringSignalQuality) );  // debug only
-                uartUsb.write ( "\r\n",  3 );  // debug only
+                uartUSB.write ( "\r\n",  3 );  // debug only  
+                char msg3 []  = "signal level: ";
+                uartUSB.write (msg3,  strlen (msg3) );  // debug only
+                uartUSB.write (msgStringSignalQuality,  strlen (msgStringSignalQuality) );  // debug only
                 #endif
                 if (this->signalLevel < LOW_LEVEL_SIGNAL) {                         //NOTA MIA: Si el nivel de señal es menor a 6, es baja.
                     this->gsmGprsComState = GSM_GPRS_STATE_NO_SIGNAL;
@@ -889,16 +889,16 @@ void gsmGprsCom::checkATPLUSCSQResponse( ) {
                 }
             }  
         } 
-    }
+    }    
 }
 
 /** 
 * @brief Sends the command AT+CSQ through UART port to the GSM GPRS module
 */
  void gsmGprsCom::sendATPLUSCSQcommand (  ) {
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->write( "AT+CSQ\r\n");
-    uartUsb.write ("\r\n ", 3 );  // debug on
+    uartUSB.write ("\r\n ", 3 );  // debug on
     this->refreshDelay->write( REFRESH_TIME_1000MS );
     this->gsmGprsComState =   GSM_GPRS_STATE_ATPLUSCSQ_WAIT_FOR_RESPONSE;
 }
@@ -920,10 +920,10 @@ void gsmGprsCom::checkATCommandResponse (  ) {
     if (checkUARTResponse (expectedResponse )) {
         this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCSQ_TO_BE_SEND;
         #ifdef DEBUG
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         char msg []  = "AT command responded correctly \r\n";
-        uartUsb.write( msg, strlen (msg) );  // debug only
-        uartUsb.write ( "\r\n",  3 );  // debug only
+        uartUSB.write( msg, strlen (msg) );  // debug only
+        uartUSB.write ( "\r\n",  3 );  // debug only
         #endif
     } 
 }
@@ -946,7 +946,7 @@ bool gsmGprsCom::charRead( char* receivedChar )
     char receivedCharLocal = '\0';
     if( this->uartGsmGprs->readable() ) {
         this->uartGsmGprs->read( &receivedCharLocal , 1);
-        pcSerialComCharWrite ( receivedCharLocal ); // debug only
+        //pcSerialComCharWrite ( receivedCharLocal ); // debug only
         *receivedChar = receivedCharLocal;       
         return true;
     }
@@ -986,5 +986,5 @@ bool gsmGprsCom::checkUARTResponse(const char* stringToCheck)
 static void pcSerialComCharWrite( char chr )  {
     char str[2] = "";
     sprintf (str, "%c", chr);
-    uartUsb.write( str, strlen(str) );
+    uartUSB.write( str, strlen(str) );
 }
