@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <math.h>
 #include <stdlib.h>
+#include <cmath>
 
 #ifdef __cplusplus
 extern "C" {
@@ -62,6 +63,11 @@ enum {
 
 extern void TinyGPS();
 bool encode(char c); // process one character received from GPS
+
+//NOTA MIA: FUNCIONES REALIZADAS POR MI AUTORIA, PARA HALLAR LA DISTANCIA ENTRE DOS COORDENADAS.
+extern float deg2rad(float deg);
+extern float distanceBetween(float lat1, float lon1, float lat2, float lon2);
+
 
 // lat/long in MILLIONTHs of a degree and age of fix in milliseconds
 // (note: versions 12 and earlier gave lat/long in 100,000ths of a degree.

@@ -28,6 +28,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define radians(angleDegrees) (angleDegrees * M_PI / 180.0)
 #define degrees(angleRadians) (angleRadians * 180.0 / M_PI)
 
+//NOTA MIA: AGREGADOS MIOS.
+#define earthRadiusKm 6371.0
+#define metersInKm 1000.0
+
 unsigned long int millis() {return 0;}
 
 const float GPS_INVALID_F_ANGLE = 1000.0;
@@ -144,6 +148,25 @@ bool encode(char c)
         _parity ^= c;
 
     return valid_sentence;
+}
+
+//NOTA MIA: FUNCIONES REALIZADAS POR MI AUTORIA, PARA HALLAR LA DISTANCIA ENTRE DOS COORDENADAS.
+extern float deg2rad(float deg) {
+    return (deg * M_PI / 180);
+}
+
+extern float distanceBetween(float lat1, float lon1, float lat2, float lon2) {
+    float dLat = deg2rad(lat2 - lat1);
+    float dLon = deg2rad(lon2 - lon1);
+
+    float a = sin(dLat / 2) * sin(dLat / 2) +
+               cos(deg2rad(lat1)) * cos(deg2rad(lat2)) *
+               sin(dLon / 2) * sin(dLon / 2);
+
+    float c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    float distance = earthRadiusKm * c * metersInKm; // Distance in meters
+
+    return distance;
 }
 
 // internal utilities

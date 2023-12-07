@@ -3,6 +3,7 @@
 #include "VirtualFence.h"
 #include "Stimulus.h"
 #include <string.h>
+#include "TinyGPS.h"
 
 //=====[Main function, the program entry point after power on or reset]========
 
@@ -64,3 +65,41 @@ gsmGprsCom gsmGprs;
         }
     }
     */
+
+/* PRUEBA DISTANCIA ENTRE COORDENADAS:
+#include <cmath>
+
+#define earthRadiusKm 6371.0
+#define metersInKm 1000.0
+
+float deg2rad(float deg) {
+    return (deg * M_PI / 180);
+}
+
+float distance(float lat1, float lon1, float lat2, float lon2) {
+    float dLat = deg2rad(lat2 - lat1);
+    float dLon = deg2rad(lon2 - lon1);
+
+    float a = sin(dLat / 2) * sin(dLat / 2) +
+               cos(deg2rad(lat1)) * cos(deg2rad(lat2)) *
+               sin(dLon / 2) * sin(dLon / 2);
+
+    float c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    float distance = earthRadiusKm * c * metersInKm; // Distance in meters
+
+    return distance;
+}
+
+int main() {
+    float lat1 = -35.191826;
+    float lon1 = -59.100395;
+    float lat2 = -35.191815;
+    float lon2 = -59.097187;
+
+    while(true) {
+        printf("LA DISTANCIA ENTRE LOS PUNTOS ES: %f\r\n", distance(lat1, lon1, lat2, lon2));
+        delay(5000);
+    }
+
+}
+*/

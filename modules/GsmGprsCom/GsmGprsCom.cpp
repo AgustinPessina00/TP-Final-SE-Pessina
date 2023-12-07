@@ -9,8 +9,9 @@
 #define REFRESH_TIME_10MS         10
 #define REFRESH_TIME_1000MS       100
 #define APN_USER_PASS "AT+CSTT=\"wap.gprs.unifon.com.ar \",\"wap\",\"wap\"\r\n"     //APN / username / password (CAMBIAR SI SE CAMBIA LA SIM!)  internet.gprs.unifon.com.ar
-#define ATPLUSCIPSTART_IP_PORT "AT+CIPSTART=\"TCP\",\"181.95.240.16\",\"123\"\r\n"  //PROTOCOL / EXTERNAL IP / PORT 
-                                                                                    //NOTA MIA: DEBERÍA USAR MI IP: 192.168.0.45
+#define ATPLUSCIPSTART_IP_PORT "AT+CIPSTART=\"TCP\",\"181.94.69.108\",\"123\"\r\n"  //PROTOCOL / EXTERNAL IP / PORT 
+                                                                                    //NOTA IP CAPITAL: 181.95.240.16
+                                                                                    //NOTA IP LOBOS: 181.94.69.108
 #define DEBUG
 #define LOW_LEVEL_SIGNAL 6
 #define CCID_VERIFICATION "8954078100795517486f" // (CAMBIAR SI SE CAMBIA LA SIM!)

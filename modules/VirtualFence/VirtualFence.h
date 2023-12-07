@@ -19,7 +19,7 @@ public:
     virtualFence();
     void update();
     void fenceUpdate();
-    void stimulusUpdate();
+    void stimulusUpdate(float flat, float flon);
 private:
 //=====[Declaration of privates atributes]=====================================
     bool fenceToSend;
@@ -31,6 +31,7 @@ private:
     trackerGPS * trackerGPS1;
     gsmGprsCom * gsmGprs;
     nonBlockingDelay * latency;
+    
 };
 
 //=====[Declarations (prototypes) of public functions]=========================

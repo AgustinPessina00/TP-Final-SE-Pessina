@@ -25,7 +25,8 @@
 class trackerGPS {
 public:
     trackerGPS ();
-    void positionUpdate( char * str);
+    void positionUpdate( char * str, float *flat, float *flon);
+    bool sendCoordAnimal;
 private:
     gsmGprsCom * gsmGprs;
     nonBlockingDelay * latency;
