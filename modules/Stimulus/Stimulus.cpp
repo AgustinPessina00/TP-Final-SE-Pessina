@@ -23,18 +23,21 @@ static void setPeriod( float period );
 
 //=====[Implementations of public functions]===================================
 
+//-----------------------------------------------------------------------------
 void stimulusControlInit() {
     setPeriod( 0.01f );
 
     setDutyCycle( 0.f );
 }
 
+//-----------------------------------------------------------------------------
 void setDutyCycle( float dutyCycle ) {
     stimulus.write(dutyCycle);
 }
 
 //=====[Implementations of private functions]==================================
 
+//-----------------------------------------------------------------------------
 static void setPeriod( float period ) {
     stimulus.period(period);
 }

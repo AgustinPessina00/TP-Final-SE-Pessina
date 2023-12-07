@@ -13,15 +13,21 @@
 
 //=====[Declaration of public classes]=========================================
 
+/*
+ * Class implementation for virtualFence
+ * it will be instantiated and used from the main function
+ * handles a GPS module, a GSM GPRS module and a delay in order to send the geolocation of the device
+ * to a TCP IP server
+ */
 class virtualFence {
-//=====[Declaration of public methods]=========================================
 public:
+    //Public methods
     virtualFence();
     void update();
     void fenceUpdate();
     void stimulusUpdate(float flat, float flon);
 private:
-//=====[Declaration of privates atributes]=====================================
+    //Private atributes
     bool fenceToSend;
     float fenceLatitude;
     float fenceLongitude;
@@ -31,7 +37,6 @@ private:
     trackerGPS * trackerGPS1;
     gsmGprsCom * gsmGprs;
     nonBlockingDelay * latency;
-    
 };
 
 //=====[Declarations (prototypes) of public functions]=========================

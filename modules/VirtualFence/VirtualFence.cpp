@@ -6,9 +6,9 @@
 //=====[Declaration of private defines]========================================
 
 #define NUMBER_OF_FENCES    3
-#define FENCE_DURATION      6000000
-#define FENCE_RADIO         300
-#define LATENCY             2000
+#define FENCE_DURATION      1080000 // 3 HOURS
+#define FENCE_RADIO         300     
+#define LATENCY             2000    // 20 SECONDS
 
 //=====[Declaration of private data types]=====================================
 
@@ -32,6 +32,7 @@ static float fenceLongitudes[NUMBER_OF_FENCES] = {-59.099840, -59.096181, -59.09
 
 //=====[Implementations of public methods]=====================================
 
+//-----------------------------------------------------------------------------
 virtualFence::virtualFence() {
     this->fenceToSend = true;
     this->fenceNumber = 0;
@@ -46,6 +47,7 @@ virtualFence::virtualFence() {
     this->gsmGprs->transmitionStop( );
 }
 
+//-----------------------------------------------------------------------------
 void virtualFence::update() {
     static char str[100] = "";
     static float flat;
@@ -54,17 +56,16 @@ void virtualFence::update() {
     bool sendCoordAnimal = true;
 //TRANSMITO LA UBICACIÓN DEL CERCO VIRTUAL
     if( this->fenceToSend ) {
-        sprintf ( str, "0|%.7f|%.7f|True\r\n", this->fenceLatitude, this->fenceLongitude);
-
+        sprintf( str, "0|%.7f|%.7f|True\r\n", this->fenceLatitude, this->fenceLongitude );
         this->gsmGprs->transmitionStart();
         
-        while(sendCoordFence == true) {
+        while( sendCoordFence == true ) {
             this->gsmGprs->connect();
             this->gsmGprs->send(str);
-            if (this->gsmGprs->transmitionHasEnded ()) {
-                this->gsmGprs->disconnect ();
-                this->gsmGprs->transmitionStop();
-                if (this->gsmGprs->disconnectionProcessHasEnded()) {
+            if( this->gsmGprs->transmitionHasEnded( ) ) {
+                this->gsmGprs->disconnect( );
+                this->gsmGprs->transmitionStop( );
+                if(this->gsmGprs->disconnectionProcessHasEnded( ) ) {
                     sendCoordFence = false;
                     this->fenceToSend = false;
                 }
@@ -72,35 +73,32 @@ void virtualFence::update() {
         }
     }
     this->fenceUpdate( );
-
 //TRANSMITO LA UBICACIÓN DEL ANIMAL.
-    if(this->latency->read()) {
-        this->trackerGPS1->positionUpdate( str, &flat, &flon);
-        this->stimulusUpdate(flat, flon);
+    if( this->latency->read( ) ) {
+        this->trackerGPS1->positionUpdate( str, &flat, &flon );
+        this->stimulusUpdate( flat, flon );
 
-        this->gsmGprs->transmitionStart();
+        this->gsmGprs->transmitionStart( );
 
-        while(this->trackerGPS1->sendCoordAnimal == true) {
-            this->gsmGprs->connect();
+        while( this->trackerGPS1->sendCoordAnimal == true ) {
+            this->gsmGprs->connect( );
             this->gsmGprs->send(str);
 
-            if (this->gsmGprs->transmitionHasEnded ()) {
-                this->gsmGprs->disconnect ();
-                this->gsmGprs->transmitionStop();
-                if (this->gsmGprs->disconnectionProcessHasEnded()) {
+            if( this->gsmGprs->transmitionHasEnded( ) ) {
+                this->gsmGprs->disconnect( );
+                this->gsmGprs->transmitionStop( );
+                if( this->gsmGprs->disconnectionProcessHasEnded( ) ) {
                     this->latency->write( LATENCY );
                     this->trackerGPS1->sendCoordAnimal = false;
-                    //printf("\r\n MANDO POR ACÁ EL CERCO JAJAJA \r\n");
                 }
             }
         }
     }
 }
-
     
-
+//-----------------------------------------------------------------------------
 void virtualFence::fenceUpdate() {
-    if( this->fenceChange->read() ) {
+    if( this->fenceChange->read( ) ) {
         this->fenceNumber++;
         if( this->fenceNumber >= NUMBER_OF_FENCES ) {
             this->fenceNumber = 0;
@@ -115,9 +113,9 @@ void virtualFence::fenceUpdate() {
     }
 }
 
+//-----------------------------------------------------------------------------
 void virtualFence::stimulusUpdate(float flat, float flon) {
     float distance = distanceBetween(fenceLatitude, fenceLongitude, flat, flon);
-    printf("\r\nLA DISTANCIA ENTRE AMBOS PUNTOS ES %f \r\n", distance);
 
     if( distance <= FENCE_RADIO ) {
         setDutyCycle( 0.0f );
@@ -154,7 +152,6 @@ void virtualFence::stimulusUpdate(float flat, float flon) {
     }
 
 }
-
 
 //=====[Implementations of private methods]====================================
 

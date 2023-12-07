@@ -1,19 +1,18 @@
-//=====[#include guards - begin]===============================================
-
+//======[#include guards - begin]===============================================
 #ifndef _SIMULUS_H_
 #define _SIMULUS_H_
 
-//=====[Libraries]=============================================================
+//======[Libraries]=============================================================
 
-//=====[Declaration of public defines]=========================================
+//======[Declaration of public defines]=========================================
 
-//=====[Declaration of public data types]======================================
+//======[Declaration of public data types]======================================
 
-//=====[Declarations (prototypes) of public functions]=========================
+//======[Declarations (prototypes) of public functions]=========================
 
 void stimulusControlInit();
 void setDutyCycle( float dutyCycle );
 
-//=====[#include guards - end]=================================================
+//======[#include guards - end]=================================================
 
 #endif // _SIMULUS_H_

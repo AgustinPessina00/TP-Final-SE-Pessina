@@ -64,39 +64,32 @@ typedef enum {
     GSM_GPRS_STATE_DISCONNECTION_SUCCESSFULL,
 } gsmGprsComDisconnectionStatus_t;
 
-/*
- AT+CSQ //Signal quality test, value range is 0-31 , 31 is the best
-  mySerial.println("AT+CCID"); //Read SIM information to confirm whether the SIM is plugged
-  mySerial.println("AT+COPS?");
-*/
 //=====[Declarations (prototypes) of public functions]=========================
 
 //=====[Declaration of public classes]=========================
      
-/**
+/*
  * Class implementation for a driver beetween NUCLEO uc and GSM GPRS Module with SIM CARD
  * that uses UART interface
  * Sends, receives and interpret AT commands in order to connect, disconect and send messages through
  * TCP IP protocol
- */
+*/
 class gsmGprsCom {
 
 public:
-// public methods
+//Public methods
     gsmGprsCom();
     gsmGprsCom( BufferedSerial * uartGsmGprs );
     void connect( );
     void send( const char * mensaje );
-    // char* recv (char * mensaje);
     void disconnect( );
     bool transmitionHasEnded( );
     void transmitionStart( );
     void transmitionStop( );
     bool disconnectionProcessHasEnded( );
 
-
 private:
-// private attributtes
+//Private attributtes
     gsmGprsComState_t gsmGprsComState;
     gsmGprsComSendStatus_t gsmGprsComSendStatus;
     gsmGprsComDisconnectionStatus_t gsmGprsComDisconnectionStatus;
@@ -106,7 +99,7 @@ private:
     float signalLevel;
     bool stopTransmition;
 
-// private methods
+//Private methods
     void checkATPLUSCIPCLOSEcommand( );
     void sendAATPLUSCIPCLOSEcommand( );
 

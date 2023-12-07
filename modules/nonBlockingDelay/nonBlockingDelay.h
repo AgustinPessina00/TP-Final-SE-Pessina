@@ -17,19 +17,19 @@ typedef uint64_t tick_t;
 
 class nonBlockingDelay {
     public:
-//=====[Declaration of public methods]=========================================
+//Public methods
     nonBlockingDelay( tick_t durationValue );
     void write( tick_t durationValue );
     bool read( );
 
     private:
-//=====[Declaration of privates atributes]=========================================
+//Private atributtes
     tick_t startTime;
     tick_t duration;
     bool isRunning;
     Ticker ticker;
     
-//=====[Declaration of privates methods]=========================================
+//Private methods
     void tickInit( );
 };
 

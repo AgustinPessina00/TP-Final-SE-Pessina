@@ -23,18 +23,21 @@ tick_t tickRead( );
 
 //=====[Implementations of private methods]====================================
 
+//-----------------------------------------------------------------------------
 void nonBlockingDelay::tickInit() {
     this->ticker.attach( tickerCallback, 10ms );
 }
 
 //=====[Implementations of public methods]=====================================
 
+//-----------------------------------------------------------------------------
 nonBlockingDelay::nonBlockingDelay( tick_t durationValue ) {
     this->tickInit( );
     this->duration = durationValue;
     this->isRunning = false;
 }
 
+//-----------------------------------------------------------------------------
 bool nonBlockingDelay::read( ) {
     bool timeArrived = false;
     tick_t elapsedTime;
@@ -54,17 +57,19 @@ bool nonBlockingDelay::read( ) {
     return timeArrived;
 }
 
+//-----------------------------------------------------------------------------
 void nonBlockingDelay::write( tick_t durationValue ) {
     this->duration = durationValue;
 }
 
 //=====[Implementations of private functions]==================================
 
-void tickerCallback( ) 
-{
+//-----------------------------------------------------------------------------
+void tickerCallback( ) {
     tickCounter++;
 }
 
+//-----------------------------------------------------------------------------
 tick_t tickRead( ) {
     return tickCounter;
 }
