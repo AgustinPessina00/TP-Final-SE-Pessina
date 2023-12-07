@@ -7,14 +7,8 @@ import socket
 import sys
 import os
 import folium
-#import time
 from selenium import webdriver
-#import urllib
-#import xlsxwriter
 from datetime import datetime
-#import keyboard
-#import signal
-#from sys import exit
 
 ##################### SETUP #####################################
 from selenium.webdriver.chrome.service import Service
@@ -71,28 +65,19 @@ def folium_plot_locations(coord_list, isVirtualFence, coord_virtual_fence):
     driver.refresh()
 
 def main():
-    #coord_list = [-34.602867,-58.422269, '2023-11-15 12:30:00']
-    #m = folium.Map()
-    #m.save('seguimiento.html')
-
     print('Bienvenido')
     print('Cerco Virtual Sistemas embebidos')
     print('Servidor TCP IP - Dispositivo Rastreador GPS para animales')
     
-    #index = 0
-    #latency = 0
-    #max_timediff = 3600
     timeout = 20  # Tiempo límite sin recibir datos en segundos
 
 
     ######### INICIANDO SERVIDOR TCP/IP##########
-    #begin_datetime = datetime.now()
     # CAPITAL: server_address = ('192.168.0.45', 123)
     server_address = ('192.168.1.33', 123)
     print('Iniciando en {} Puerto {}'.format(*server_address))
     sock.bind(server_address)
     sock.listen(1)
-    #begin_datetime = datetime.now()
     
     coord_list = []  # Lista para almacenar las coordenadas recibidas
     coord_virtual_fence = {}    #Inicializo el cerco.
@@ -101,7 +86,7 @@ def main():
         print('Esperando envio de datos')
         connection, client_address = sock.accept()
         connection.settimeout(timeout)  # Establecer el tiempo límite para recibir datos
-        
+
         try:
             print('Conexion desde rastreador:', client_address)
             
