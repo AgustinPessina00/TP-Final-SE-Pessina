@@ -23,7 +23,6 @@ public:
     void positionUpdate( char * str, float *flat, float *flon);
     bool sendCoordAnimal;
 private:
-    gsmGprsCom * gsmGprs;
     int numberOfDevice;
 };
 

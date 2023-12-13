@@ -25,7 +25,6 @@ BufferedSerial uartGPSCom( PG_14, PG_9, 9600 );
 
 //-----------------------------------------------------------------------------
 trackerGPS::trackerGPS () {
-    this->gsmGprs = new gsmGprsCom( );
     this->numberOfDevice = 1;
     this->sendCoordAnimal = false;
     TinyGPS();
