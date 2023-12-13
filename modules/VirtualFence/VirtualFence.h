@@ -24,9 +24,10 @@ public:
     //Public methods
     virtualFence();
     void update();
+private:
+    //Private methods
     void fenceUpdate();
     void stimulusUpdate(float flat, float flon);
-private:
     //Private atributes
     bool fenceToSend;
     float fenceLatitude;

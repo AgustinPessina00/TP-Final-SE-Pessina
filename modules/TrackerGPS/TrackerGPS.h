@@ -24,7 +24,6 @@ public:
     bool sendCoordAnimal;
 private:
     gsmGprsCom * gsmGprs;
-    nonBlockingDelay * latency;
     int numberOfDevice;
 };
 

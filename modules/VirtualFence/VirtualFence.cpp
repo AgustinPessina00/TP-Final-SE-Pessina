@@ -5,7 +5,7 @@
 
 //=====[Declaration of private defines]========================================
 
-#define NUMBER_OF_FENCES    3
+#define NUMBER_OF_FENCES    2
 #define FENCE_DURATION      1080000 // 3 HOURS
 #define FENCE_RADIO         300     
 #define LATENCY             2000    // 20 SECONDS
@@ -21,12 +21,12 @@
 //=====[Declaration and initialization of private global variables]============
 
 //CERCO PARA CAPITAL.
-//static float fenceLatitudes[NUMBER_OF_FENCES] = {-34.602729, -34.603278};
-//static float fenceLongitudes[NUMBER_OF_FENCES] = {-58.422540, -58.418032};
+static float fenceLatitudes[NUMBER_OF_FENCES] = {-34.602729, -34.603278};
+static float fenceLongitudes[NUMBER_OF_FENCES] = {-58.422540, -58.418032};
 
 //CERCO PARA LOBOS.
-static float fenceLatitudes[NUMBER_OF_FENCES] = {-35.192304, -35.192534, -35.192270};
-static float fenceLongitudes[NUMBER_OF_FENCES] = {-59.099840, -59.096181, -59.095471};
+//static float fenceLatitudes[NUMBER_OF_FENCES] = {-35.192304, -35.192534, -35.192270};
+//static float fenceLongitudes[NUMBER_OF_FENCES] = {-59.099840, -59.096181, -59.095471};
 
 //=====[Declarations (prototypes) of private functions]========================
 
@@ -57,8 +57,16 @@ void virtualFence::update() {
 //TRANSMITO LA UBICACIÓN DEL CERCO VIRTUAL
     if( this->fenceToSend ) {
         sprintf( str, "0|%.7f|%.7f|True\r\n", this->fenceLatitude, this->fenceLongitude );
+
+        /*
+        printf("\r\n-------------------------");
+        printf("\r\nSe envían las coordenadas del cerco:");
+        printf("\r\nLa latitud es: %f", fenceLatitude);
+        printf("\r\nLa longitud es: %f", fenceLongitude);
+        */
+
         this->gsmGprs->transmitionStart();
-        
+
         while( sendCoordFence == true ) {
             this->gsmGprs->connect();
             this->gsmGprs->send(str);
@@ -77,6 +85,13 @@ void virtualFence::update() {
     if( this->latency->read( ) ) {
         this->trackerGPS1->positionUpdate( str, &flat, &flon );
         this->stimulusUpdate( flat, flon );
+
+        /*
+        printf("\r\n-------------------------");
+        printf("\r\nSe envían las coordenadas del animal:");
+        printf("\r\nLa latitud es: %f", flat);
+        printf("\r\nLa longitud es: %f", flon);
+        */
 
         this->gsmGprs->transmitionStart( );
 

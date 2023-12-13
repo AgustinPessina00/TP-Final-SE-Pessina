@@ -9,12 +9,12 @@
 #define REFRESH_TIME_10MS         10
 #define REFRESH_TIME_1000MS       100
 #define APN_USER_PASS "AT+CSTT=\"wap.gprs.unifon.com.ar \",\"wap\",\"wap\"\r\n"     //APN / username / password (CAMBIAR SI SE CAMBIA LA SIM!)  internet.gprs.unifon.com.ar
-#define ATPLUSCIPSTART_IP_PORT "AT+CIPSTART=\"TCP\",\"181.94.69.108\",\"123\"\r\n"  //PROTOCOL / EXTERNAL IP / PORT 
+#define ATPLUSCIPSTART_IP_PORT "AT+CIPSTART=\"TCP\",\"181.95.240.16\",\"123\"\r\n"  //PROTOCOL / EXTERNAL IP / PORT 
                                                                                     //NOTA IP CAPITAL: 181.95.240.16
                                                                                     //NOTA IP LOBOS: 181.94.69.108
 #define DEBUG
 #define LOW_LEVEL_SIGNAL 6
-#define CCID_VERIFICATION "8954078100795517486f" // (CAMBIAR SI SE CAMBIA LA SIM!)
+#define CCID_VERIFICATION "8954071144842096463f" // (CAMBIAR SI SE CAMBIA LA SIM!)
 
 //=====[Declaration of private functions]=====================================
 
@@ -62,6 +62,7 @@ void gsmGprsCom::connect( ) {
     }
 
     switch( this->gsmGprsComState ) {
+
         case GSM_GPRS_STATE_INIT: {
             numberOfTries = 0;
             if( this->stopTransmition == false ) {
@@ -585,7 +586,7 @@ void gsmGprsCom::checkATPLUSCIFSRcommand( ) {
             #endif
 
             strNewIP = "";
-            this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIPSTART_TO_BE_SEND;   //CAMBIAR ES SOLO A MODO DE PRUEBA
+            this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCIPSTART_TO_BE_SEND;
             return;
         }
     }
@@ -639,7 +640,7 @@ void gsmGprsCom::checkATPLUSCSTTcommand ()  {
 void gsmGprsCom::sendATPLUSCSTTcommand( ) {
     uartUSB.write ("\r\n ", 3 );
     this->write(APN_USER_PASS);
-    uartUSB.write ("\r\n ", 3 )
+    uartUSB.write ("\r\n ", 3 );
     this->refreshDelay->write( REFRESH_TIME_1000MS );
     this->gsmGprsComState = GSM_GPRS_STATE_ATPLUSCSTT_WAIT_FOR_RESPONSE;
 }
@@ -856,6 +857,7 @@ bool gsmGprsCom::checkUARTResponse(const char* stringToCheck) {
     bool moduleResponse = false;
 
     if( this->charRead( &charReceived ) ) {
+        pcSerialComCharWrite( charReceived);
         if( charReceived == stringToCheck[responseStringPositionIndex] ) {
             responseStringPositionIndex++;
             if( stringToCheck[responseStringPositionIndex] == '\0' ) {
